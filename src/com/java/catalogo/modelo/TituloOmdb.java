@@ -24,7 +24,7 @@ public class TituloOmdb {
 	
 	@Override
 	public String toString () {
-		return "Titulo: "+ title + " Ano de Lançamento: " + year + " Tempo: " + runtime;
+		return "Titulo: "+ title + "\nAno de Lançamento: " + year + "\nTempo: " + runtime;
 		
 	}
 

@@ -9,7 +9,7 @@ public class Teste {
 		
 		//cast
 		if (cachorro instanceof Cachorro) {
-			Animal animal = (Animal) cachorro;
+		//	Animal animal = (Animal) cachorro;
 		}
 		
 		

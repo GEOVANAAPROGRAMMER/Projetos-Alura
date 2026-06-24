@@ -1,5 +1,7 @@
 package com.java.catalogo.modelo;
 
+import com.java.catalogo.excecao.ErroAoConverterAnoException;
+
 public class Titulo implements Comparable<Titulo> {
 
     private String nome;
@@ -16,8 +18,12 @@ public class Titulo implements Comparable<Titulo> {
     
     public Titulo(TituloOmdb meuTituloOmdb) {
 		this.nome = meuTituloOmdb.getTitle();
+		
+		if(meuTituloOmdb.getYear().length() > 4) {
+			throw new ErroAoConverterAnoException ("Não foi possível converter o ano de lançamento");
+		}
 		this.anoDeLancamento = Integer.valueOf(meuTituloOmdb.getYear());
-		this.duracaoEmMinutos = Integer.valueOf(meuTituloOmdb.getRuntime().substring(0, 2));
+		this.duracaoEmMinutos = Integer.valueOf(meuTituloOmdb.getRuntime().substring(0, 3));
 	}
 
 	public void exibeFichaTecnica() {
@@ -79,7 +85,7 @@ public class Titulo implements Comparable<Titulo> {
 	
 	@Override
 	public String toString () {
-		return "Titulo: "+ nome + " Ano de Lançamento: " + anoDeLancamento + " Tempo: " + duracaoEmMinutos;
+		return "(Titulo: "+ nome + " Ano de Lançamento: " + anoDeLancamento + " Tempo: " + duracaoEmMinutos + ") ";
 		
 	}
 
