@@ -1,24 +1,17 @@
 package com.java.api.cep;
 
 import java.io.BufferedReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class ApiCep  {
-	
-	Gson gson = new GsonBuilder()
-			.setPrettyPrinting()
-			.create();
 	
 	private String cep;
 	private String linguagem;
 	private String url;
-	private String endereco;
+	private String enderecoJson;
 	
 	public String getCep() {
 		return cep;
@@ -35,12 +28,13 @@ public class ApiCep  {
 		this.linguagem = linguagem;
 	}
 	
-	public String getEndereco() {
-		return endereco;
+	public String getEnderecoJson() {
+		return enderecoJson;
 	}
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setEnderecoJson(String enderecoJson) {
+		this.enderecoJson = enderecoJson;
 	}
+	
 	
 	public void criaConexaoApiCep() throws IOException, Exception {
 		// cria endereço url
@@ -62,20 +56,9 @@ public class ApiCep  {
             resposta.append(linha);
         }
 		
-		System.out.println(resposta);
-		
-		endereco = resposta.toString();
+		enderecoJson = 	resposta.toString();
 
         leitura.close();
-
-	}
-	
-	public void geraArquivoJson() throws IOException {		
-		FileWriter arquivoJson = new FileWriter ("ArquivoDeEndereco.json");
-		// tranforma o "endereco" que é um json em um objeto qualquer
-		// gson tranforma em texto e formata
-		arquivoJson.write(gson.toJson(gson.fromJson(endereco, Object.class)));
-		arquivoJson.close();
 	}
 
 }

@@ -3,26 +3,40 @@ package com.java.api.cep;
 import java.io.IOException;
 import java.util.Scanner;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Main {
 
 	public static void main(String[] args) throws IOException, Exception {
 		
+		Gson gson = new GsonBuilder()
+				.setPrettyPrinting()
+				.create();
+		
 		Scanner sc = new Scanner (System.in);
-		
-		String cep;
-		String linguagem;
-		
+
 		System.out.println("Informe o numero do seu CEP: ");
-		cep = sc.next();
-		System.out.println("Informe o formato (json ou xml) deseja receber as informações:");
-		linguagem = sc.next();
+		String cep = sc.next();
+		System.out.println("Informe o numero da residência: ");
+		int numero = sc.nextInt();
+		System.out.println("Informe o formato (json ou xml) que deseja receber as informações:");
+		String linguagem = sc.next();
 		
-		ApiCep conectaApiCep = new ApiCep();
-		conectaApiCep.setCep(cep);
-		conectaApiCep.setLinguagem(linguagem);
-		conectaApiCep.criaConexaoApiCep();
+		ApiCep ApiCep = new ApiCep();
+		ApiCep.setCep(cep);
+		ApiCep.setLinguagem(linguagem);
+		ApiCep.criaConexaoApiCep();
 		
-		conectaApiCep.geraArquivoJson();
+		GeradorArquivoJson geradorArquivoJson = new GeradorArquivoJson();
+		geradorArquivoJson.geraArquivoJson();
+		
+
+		Endereco endereco = gson.fromJson(ApiCep.getEnderecoJson(), Endereco.class);
+		endereco.setNumero(numero);
+		System.out.println("Endereço encontrado:");
+		
+		System.out.println(endereco);
 		
 		sc.close();
 	}
